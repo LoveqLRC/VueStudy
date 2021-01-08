@@ -13,6 +13,7 @@
    - 非prop特性
      - `$attrs`
      - `$listeners`
+  - 插槽
   
 ##  props
 父传子
@@ -179,4 +180,73 @@ this.$children[0].xx='xxx'
   export default {
     inject: ['foo'],
   }
+```
+## 插槽
+
+插槽语法是Vue 实现的内容分发 API，用于复合组件开发。该技术在通用组件库开发中有大量应用。
+
+### 匿名插槽
+
+> Child.vue
+```html
+<div>
+        <slot></slot>
+</div>
+```
+
+> Parent.vue
+
+```html
+     <Child>parent msg</Child>
+```
+
+### 具名插槽
+
+将内容指定分发到子组件指定内容
+
+
+> Child.vue
+```html
+ <div>
+        <slot></slot>
+        <slot name="content"></slot>     
+  </div>
+```
+
+
+> Parent.vue
+
+```html
+     <Child>
+            <template v-slot:default>
+                默认插槽用default做参数
+            </template>
+
+            <template v-slot:content>
+                具名插槽用插槽名做参数
+            </template>
+    </Child>
+```
+
+### 作用域插槽
+> Child.vue
+```html
+   <div>
+        <slot username="rc"></slot>
+        <slot name="content"></slot>
+    </div>
+```
+
+> Parent.vue
+
+```html
+     <Child>
+            <template v-slot:default="account">
+                来自子组件的数据{{account.username}}
+            </template>
+
+            <template v-slot:content>
+                具名插槽用插槽名做参数
+            </template>
+        </Child>
 ```
