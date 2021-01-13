@@ -3,18 +3,21 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <FormExample></FormExample>
     <CommunicationExample></CommunicationExample>
+    <VuexExample></VuexExample>
   </div>
 </template>
 
 <script>
 import FormExample from '@/components/form'
 import CommunicationExample from '@/components/communication'
+import VuexExample from '@/components/vuex'
 
 export default {
   name: 'App',
   components: {
     FormExample,
-    CommunicationExample
+    CommunicationExample,
+    VuexExample
   }
 }
 </script>
