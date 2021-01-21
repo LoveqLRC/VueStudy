@@ -32,7 +32,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    
+    welcome:state =>{
+      return state.isLogin?"登录成功":"登录失败"
+    }
   },
   modules: {
   }

@@ -26,7 +26,7 @@ export default new Vuex.Store({
 
 # Mutation
 
-修改`state`只能通过`Mutation`，一条重要的原则就是要记住 `mutation` 必须是同步函数。
+修改`state`只能通过`Mutation`，一条重要的原则就是 `mutation` 必须是同步函数。
 
 ```js
 export default new Vuex.Store({
@@ -58,14 +58,14 @@ export default new Vuex.Store({
 
 
 
-### store
+### 通过store
 
 ```html
    <div>
         isLogin:{{$store.state.isLogin}}
     </div>
 ```
-### mapState
+### 通过mapState
 
 ```html
 <template>
@@ -93,7 +93,7 @@ import {mapState} from 'vuex'
 - 通过`$store`进行操作
 - `mapMutation`
 
-### store
+### 通过store
 
 ```html
 <template>
@@ -122,7 +122,7 @@ import {mapState} from 'vuex'
 </style>
 ```
 
-### mapMutation
+### 通过mapMutation
 
 ```html
 <template>
@@ -161,6 +161,9 @@ import {mapState,mapMutations} from 'vuex'
 
 - `Action` 提交的是 `mutation`，而不是直接变更状态。
 - `Action` 可以包含任意异步操作。
+
+
+先定义`Action`方法
 
 ```js
 import Vue from 'vue'
@@ -225,6 +228,7 @@ import {mapState,mapMutations} from 'vuex'
                 this.mutationsLogin()
             },
             login(){
+                //dispatch进行耗时登录
                this.$store.dispatch('login','rc')         
             },
             ...mapMutations({
@@ -277,6 +281,8 @@ import {mapState,mapMutations,mapActions} from 'vuex'
                 mutationsLogin:'login'
             }),
             ...mapActions({
+                   //mapActions别名，意在解决方法名字冲突的问题，
+                //this.actionLogin() 等价于  this.$store.dispatch('login','rc')   
                 actionLogin:"login"
             })
         },
@@ -287,5 +293,49 @@ import {mapState,mapMutations,mapActions} from 'vuex'
 <style lang="scss" scoped>
 
 </style>
+```
+
+
+
+# Getters
+可以使用`getters`从`store`的`state`中派生出一些状态。
+
+
+> store/index.js
+
+```
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    isLogin:false
+  },
+  ......
+  getters: {
+    welcome:state =>{
+      return state.isLogin?"登录成功":"登录失败"
+    }
+  },
+  ......
+```
+
+可以通过`store`访问，`$store.getters.welcome`,也可以通过`mapGetters`方法来访问
+
+```js
+<script>
+import {mapState,mapMutations,mapActions, mapGetters} from 'vuex'
+    export default {
+        computed: {
+            // 把 `this.welcomeTips` 映射为 `this.$store.getters.welcome`
+           ...mapGetters({
+               welcomeTips:'welcome'
+           })
+        },  
+    }
+</script>
+
 ```
 

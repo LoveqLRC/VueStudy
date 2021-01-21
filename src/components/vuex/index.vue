@@ -3,15 +3,19 @@
         isLogin:{{isLogin}}
         <div @click="modifyState">修改</div>
         <div @click="login">登录</div>
-    
+        <div>{{$store.getters.welcome}}</div>
+        <div>{{this.welcomeTips}}</div>
     </div>
 </template>
 
 <script>
-import {mapState,mapMutations,mapActions} from 'vuex'
+import {mapState,mapMutations,mapActions, mapGetters} from 'vuex'
     export default {
         computed: {
            ...mapState(['isLogin'])
+           ,...mapGetters({
+               welcomeTips:'welcome'
+           })
         },
         methods: {
             modifyState() {
