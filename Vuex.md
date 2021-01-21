@@ -339,3 +339,88 @@ import {mapState,mapMutations,mapActions, mapGetters} from 'vuex'
 
 ```
 
+# 模块化
+使用`modules`定义多个子模块利于组件复杂状态
+
+```js
+export default{
+    // 避免命名冲突   
+    namespaced: true,
+    state:{
+        username:"rc"
+    },
+    actions: {
+        getUserInfo(){
+            console.log('getUserInfo')
+        }
+    }
+}
+```
+
+> user.js
+
+```
+export default{
+    // 避免命名冲突   
+    namespaced: true,
+    state:{
+        username:"rc"
+    }
+}
+```
+
+使用
+```html
+        <div>用户名：{{this.$store.state.user.username}}</div>
+```
+
+另外一种方式
+```js
+       ...mapState('user',['username'])
+```
+
+
+`actions`修改方式
+
+引入
+```js
+           ...mapActions(['user/getUserInfo'])
+```
+调用
+```js
+     this['user/getUserInfo']()
+```
+
+# 插件
+
+
+`Vuex` 的 `store` 接受`plugins`选项，这个选项暴露出每次 `mutation` 的钩子。`Vuex` 插件就是一个函数，它接收 `store` 作为唯一参数
+
+
+注册
+
+```js
+export default new Vuex.Store({
+  plugins:[persistPlugin]
+})
+```
+
+持久化实例
+```js
+export default store =>{
+
+    //设置初始化状态
+    if(localStorage){
+        var isLogin  = JSON.parse(localStorage.getItem('isLogin'))
+        if(isLogin){
+            store.commit('login')
+        }
+    }
+    //监听mutations变化
+    store.subscribe((mutations,state)=>{
+        if(mutations.type=='login'){
+            localStorage.setItem('isLogin',JSON.stringify(state.isLogin))
+        }   
+    })
+}
+```
