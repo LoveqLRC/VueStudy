@@ -95,7 +95,7 @@ this.$bus.$emit('busEvent',"emit Msg")
 //child1
 this.$parent.$on('foo',handle)
 //child2
-this.$parent.$emit('foo')开课吧web全栈架构师
+this.$parent.$emit('foo')
 ```
 
 ##  $children
@@ -229,13 +229,14 @@ this.$children[0].xx='xxx'
 ```
 
 ### 作用域插槽
+子组件传参给父组件
 > Child.vue
 ```html
    <div>
         <slot username="rc"></slot>
-        <slot name="content"></slot>
     </div>
 ```
+
 
 > Parent.vue
 
@@ -243,10 +244,6 @@ this.$children[0].xx='xxx'
      <Child>
             <template v-slot:default="account">
                 来自子组件的数据{{account.username}}
-            </template>
-
-            <template v-slot:content>
-                具名插槽用插槽名做参数
             </template>
         </Child>
 ```
